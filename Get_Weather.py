@@ -46,7 +46,9 @@ def Get_weatherinfo(city_list, savefile):
     city_before = pd.read_csv(savefile)  # 读取之前已保存的过往数据
     city_pd = []
     city_pd.append(city_before)
-    daystart = datetime.datetime.now()
+    daystart_utc = datetime.datetime.utcnow()
+    daystart = daystart_utc.astimezone(
+        datetime.timezone(datetime.timedelta(hours=8)))  # Beijing timezone
     print('\n查询时间：', daystart.strftime('%Y-%m-%d %Hh:%Mm:%Ss'))
     for i in tqdm(range(city_list.shape[0])):
         cityid = city_list.loc[i, 'areaid']
