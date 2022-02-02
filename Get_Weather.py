@@ -10,8 +10,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import random
-import schedule
-
 
 # 定义参数
 headers = {'Host': 'www.weather.com.cn',
