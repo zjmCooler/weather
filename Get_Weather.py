@@ -185,10 +185,11 @@ def job():
 
 if __name__ == '__main__':
     job()
-    print('====wait====')
-    schedule.every().day.at("10:00").do(job)
-    schedule.every().day.at("17:00").do(job)
-    schedule.every().day.at("22:00").do(job)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    print("Job done")
+    # print('====wait====')
+    # schedule.every().day.at("10:00").do(job)
+    # schedule.every().day.at("17:00").do(job)
+    # schedule.every().day.at("22:00").do(job)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
