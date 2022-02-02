@@ -76,8 +76,8 @@ def Get_weatherinfo(city_list, savefile):
         by=['area_id', 'date', 'od21'], ascending=[True, True, True])  # 对数据重排序，以城市>日期>整点时间升序排列
     city_weather_sorted.to_csv(savefile, encoding="utf_8_sig", index=False)
     print('天气数据已保存：', savefile)
-    dayend = datetime.datetime.now()
-    print('查询 %d 个城市，共耗时：%s' % (city_list.shape[0], dayend-daystart))
+    dayend = datetime.datetime.utcnow()
+    print('查询 %d 个城市，共耗时：%s' % (city_list.shape[0], dayend-daystart_utc))
     return city_weather_sorted
 
 
