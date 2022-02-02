@@ -9,7 +9,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 2,9,14 * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -36,7 +38,7 @@ jobs:
           # The target architecture (x86, x64) of the Python interpreter.
           architecture: x64
       - name: Setup Deps
-        run: pip install requirements.txt
+        run: pip install -r requirements.txt
       # Runs python script
       - name: Grab weather info
         run: python Get_Weather.py
