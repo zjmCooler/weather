@@ -149,7 +149,7 @@ def figplot_weather(weather_sorted):
 def job():
 
     # 路径配置
-    citypath = r'China_Weather_Website\city.json'
+    citypath = r'China_Weather_Website/city.json'
     savefile = r'city_weather.csv'
 
     # 去重
