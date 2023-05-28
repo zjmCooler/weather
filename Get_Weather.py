@@ -176,8 +176,7 @@ def figplot_weather(weather_sorted):
     plt.show()
 
 
-def job():
-
+def job_suzhou():
     # 路径配置
     citypath = r"China_Weather_Website/city.json"
     savefile = r"city_weather_suzhou.csv"
@@ -214,8 +213,46 @@ def job():
         sys.exit()
 
 
+def job_all():
+    # 路径配置
+    citypath = r"China_Weather_Website/city.json"
+    savefile = r"city_weather.csv"
+
+    # 去重
+    city_weather = pd.read_csv(savefile)
+    city_weather_single = city_weather.drop_duplicates(
+        ["area_id", "date", "od21"], keep="first", inplace=False
+    )  # 对过往天气结果进行去重处理，保留最新爬取结果
+    city_weather_sorted = city_weather_single.sort_values(
+        by=["area_id", "date", "od21"], ascending=[True, True, True]
+    )  # 对数据重排序，以城市>日期>整点时间升序排列
+    city_weather_sorted.to_csv(savefile, encoding="utf_8_sig", index=False)
+
+    # 内置城市id库测试
+    with open(citypath, "r", encoding="utf-8") as fp:
+        cityjson = json.load(fp)
+    arealist = get_json_value(cityjson, "AREAID", 1)
+    citycode = arealist["areaid"]
+    arealist.to_csv(citypath.split(".")[0] + str("_info.csv"), index=False)
+    # city = {"北京": "101010100", "上海": "101020100", "广州": "101280101", "海口": "101310101"}
+    # pcode = city.values()
+
+    # action=input('操作输入：爬取数据输入1，仅可视化数据输入2\n')
+    # suzhou_pd = pd.DataFrame({"name": ["江苏_苏州_苏州"], "areaid": ["101190401"]})
+    action = str("1")
+    if action == str("1"):
+        weather_result = Get_weatherinfo(arealist, savefile)
+    elif action == str("2"):
+        weather_result = pd.read_csv(savefile)
+        figplot_weather(weather_result)
+    else:
+        print("input error")
+        sys.exit()
+
+
 if __name__ == "__main__":
-    job()
+    job_suzhou()
+    job_all()
     print("Job done")
     # print('====wait====')
     # schedule.every().day.at("10:00").do(job)
